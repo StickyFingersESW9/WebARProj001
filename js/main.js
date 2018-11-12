@@ -101,6 +101,8 @@ function init() {
   // background color if no video present
   videoImageContext.fillStyle = '#000000';
   videoImageContext.fillRect( 0, 0, videoImage.width, videoImage.height );
+  console.log( "videoImage.width=" + videoImage.width );
+  console.log( "videoImage.height=" + videoImage.height );
 
   videoTexture = new THREE.Texture( videoImage );
   videoTexture.minFilter = THREE.LinearFilter;

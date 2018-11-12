@@ -9,8 +9,7 @@ var videoTexture;
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 window.URL = window.URL || window.webkitURL;
 
-//var camvideo = document.getElementById( 'monitor' );
-video = document.getElementById( "video" );
+var camvideo = document.getElementById( 'monitor' );
 if (!navigator.getUserMedia) 
 {
   document.getElementById('errorMessage').innerHTML = 
@@ -22,21 +21,21 @@ else
   //var media = { audio : false, video : { facingMode: "user" } };
   // リア.
   var media = { audio : false, video : { facingMode: { exact: "environment" } } };
-  navigator.getUserMedia( media, gotStream, noStream );
+  navigator.getUserMedia( media, gotStream, noStream);
 }
 
 function gotStream(stream) 
 {
   if ( window.URL )
   {
-    video.src = window.URL.createObjectURL( stream );
+    camvideo.src = window.URL.createObjectURL( stream );
   }
   else // Opera
   {
-    video.src = stream;
+    camvideo.src = stream;
   }
 
-  video.onerror = function(e) 
+  camvideo.onerror = function(e) 
   {
     stream.stop();
   };
@@ -53,6 +52,7 @@ function noStream(e)
   }
   document.getElementById('errorMessage').textContent = msg;
 }
+
 
 function init() {
 

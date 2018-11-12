@@ -96,19 +96,18 @@ function init() {
   video = document.getElementById( 'monitor' );
   video.play();
 
-/*
   videoImage = document.getElementById( 'videoImage' );
   videoImageContext = videoImage.getContext( '2d' );
   // background color if no video present
   videoImageContext.fillStyle = '#000000';
   videoImageContext.fillRect( 0, 0, videoImage.width, videoImage.height );
 
-/*
   videoTexture = new THREE.Texture( videoImage );
   videoTexture.minFilter = THREE.LinearFilter;
   videoTexture.magFilter = THREE.LinearFilter;
 
 
+/*
   // 再奥背景
   var planeGeometry = new THREE.PlaneGeometry( width, height, 0 );
   var planeMaterial = new THREE.MeshBasicMaterial( { map: videoTexture, overdraw: true, side:THREE.DoubleSide } );
@@ -145,7 +144,7 @@ function init() {
 
     if ( video.readyState === video.HAVE_ENOUGH_DATA ) 
     {
-      //videoImageContext.drawImage( video, 0, 0, videoImage.width, videoImage.height );
+      videoImageContext.drawImage( video, 0, 0, videoImage.width, videoImage.height );
       if ( videoTexture )
       {
         videoTexture.needsUpdate = true;

@@ -89,7 +89,6 @@ function init() {
   const camera = new THREE.PerspectiveCamera( 45, width / height );
   camera.position.set( 0, 0, +1000 );
 
-/*
   video = document.getElementById( 'monitor' );
   video.play();
 
@@ -99,6 +98,7 @@ function init() {
   videoImageContext.fillStyle = '#000000';
   videoImageContext.fillRect( 0, 0, videoImage.width, videoImage.height );
 
+/*
   videoTexture = new THREE.Texture( videoImage );
   videoTexture.minFilter = THREE.LinearFilter;
   videoTexture.magFilter = THREE.LinearFilter;
@@ -138,12 +138,13 @@ function init() {
 
     if ( video.readyState === video.HAVE_ENOUGH_DATA ) 
     {
-      videoImageContext.drawImage( video, 0, 0, videoImage.width, videoImage.height );
+      //videoImageContext.drawImage( video, 0, 0, videoImage.width, videoImage.height );
       if ( videoTexture )
       {
         videoTexture.needsUpdate = true;
       }
     }
+
 
     if ( isSmartPhone )
     {

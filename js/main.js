@@ -17,7 +17,11 @@ if (!navigator.getUserMedia)
 }
 else
 {
-  navigator.getUserMedia({video: true}, gotStream, noStream);
+  // フロント.
+  //var media = { audio : false, video : { facingMode: "user" } };
+  // リア.
+  var media = { audio : false, video : { facingMode: { exact: "environment" } } };
+  navigator.getUserMedia( media, gotStream, noStream);
 }
 
 function gotStream(stream) 
@@ -92,6 +96,7 @@ function init() {
   video = document.getElementById( 'monitor' );
   video.play();
 
+/*
   videoImage = document.getElementById( 'videoImage' );
   videoImageContext = videoImage.getContext( '2d' );
   // background color if no video present
@@ -110,6 +115,8 @@ function init() {
   var plane = new THREE.Mesh( planeGeometry, planeMaterial );
   scene.add( plane );
 */
+
+
 
   // 箱を作成
   const geometry = new THREE.BoxGeometry( 400, 400, 400 );

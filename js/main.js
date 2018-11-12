@@ -69,14 +69,27 @@ function init() {
   const height = window.innerHeight;
 
   // レンダラーを作成
-  const renderer = new THREE.WebGLRenderer({
+  var renderer = new THREE.WebGLRenderer(
+    {
       canvas: document.querySelector( '#myCanvas' ),
-      antialias: true
-  });
+      antialias: true,
+      alpha: true
+    }
+  );
+  renderer.setClearAlpha( 0.0 );
   renderer.setPixelRatio( window.devicePixelRatio );
   renderer.setSize( width, height );
 
 
+  // レンダラーのWebVR設定を有効にする
+  //renderer.vr.enabled = true;
+
+  const scene = new THREE.Scene();
+
+  const camera = new THREE.PerspectiveCamera( 45, width / height );
+  camera.position.set( 0, 0, +1000 );
+
+/*
   video = document.getElementById( 'monitor' );
   video.play();
 
@@ -91,19 +104,12 @@ function init() {
   videoTexture.magFilter = THREE.LinearFilter;
 
 
-  // レンダラーのWebVR設定を有効にする
-  //renderer.vr.enabled = true;
-
-  const scene = new THREE.Scene();
-
-  const camera = new THREE.PerspectiveCamera( 45, width / height );
-  camera.position.set( 0, 0, +1000 );
-
   // 再奥背景
   var planeGeometry = new THREE.PlaneGeometry( width, height, 0 );
   var planeMaterial = new THREE.MeshBasicMaterial( { map: videoTexture, overdraw: true, side:THREE.DoubleSide } );
   var plane = new THREE.Mesh( planeGeometry, planeMaterial );
   scene.add( plane );
+*/
 
   // 箱を作成
   const geometry = new THREE.BoxGeometry( 400, 400, 400 );

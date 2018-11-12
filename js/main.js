@@ -1,0 +1,160 @@
+// ページの読み込みを待つ
+window.addEventListener( 'load', init );
+
+
+var video;
+var videoImage;
+var videoTexture;
+
+navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+window.URL = window.URL || window.webkitURL;
+
+var camvideo = document.getElementById( 'monitor' );
+if (!navigator.getUserMedia) 
+{
+  document.getElementById('errorMessage').innerHTML = 
+    'Sorry. <code>navigator.getUserMedia()</code> is not available.';
+}
+else
+{
+  navigator.getUserMedia({video: true}, gotStream, noStream);
+}
+
+function gotStream(stream) 
+{
+  if ( window.URL )
+  {
+    camvideo.src = window.URL.createObjectURL( stream );
+  }
+  else // Opera
+  {
+    camvideo.src = stream;
+  }
+
+  camvideo.onerror = function(e) 
+  {
+    stream.stop();
+  };
+
+  stream.onended = noStream;
+}
+
+function noStream(e) 
+{
+  var msg = 'No camera available.';
+  if (e.code == 1) 
+  {
+    msg = 'User denied access to use camera.';
+  }
+  document.getElementById('errorMessage').textContent = msg;
+}
+
+
+function init() {
+
+  var isSmartPhone = false;
+
+  var ua = navigator.userAgent;
+  if (ua.indexOf('iPhone') > 0 || ua.indexOf('iPod') > 0 || ua.indexOf('Android') > 0) {
+      isSmartPhone = true;
+  }else if(ua.indexOf('iPad') > 0 || ua.indexOf('Android') > 0){
+      isSmartPhone = true;
+  }
+
+  // ポリフィルを使用
+  const polyfill = new WebVRPolyfill();
+
+  // サイズを指定
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+
+  // レンダラーを作成
+  const renderer = new THREE.WebGLRenderer({
+      canvas: document.querySelector( '#myCanvas' ),
+      antialias: true
+  });
+  renderer.setPixelRatio( window.devicePixelRatio );
+  renderer.setSize( width, height );
+
+
+  video = document.getElementById( 'monitor' );
+  video.play();
+
+  videoImage = document.getElementById( 'videoImage' );
+  videoImageContext = videoImage.getContext( '2d' );
+  // background color if no video present
+  videoImageContext.fillStyle = '#000000';
+  videoImageContext.fillRect( 0, 0, videoImage.width, videoImage.height );
+
+  videoTexture = new THREE.Texture( videoImage );
+  videoTexture.minFilter = THREE.LinearFilter;
+  videoTexture.magFilter = THREE.LinearFilter;
+
+
+  // レンダラーのWebVR設定を有効にする
+  //renderer.vr.enabled = true;
+
+  const scene = new THREE.Scene();
+
+  const camera = new THREE.PerspectiveCamera( 45, width / height );
+  camera.position.set( 0, 0, +1000 );
+
+  // 再奥背景
+  var planeGeometry = new THREE.PlaneGeometry( width, height, 0 );
+  var planeMaterial = new THREE.MeshBasicMaterial( { map: videoTexture, overdraw: true, side:THREE.DoubleSide } );
+  var plane = new THREE.Mesh( planeGeometry, planeMaterial );
+  scene.add( plane );
+
+  // 箱を作成
+  const geometry = new THREE.BoxGeometry( 400, 400, 400 );
+  const material = new THREE.MeshNormalMaterial();
+  const box = new THREE.Mesh( geometry, material );
+  scene.add( box );
+
+  if( isSmartPhone )
+  {
+    var gcontrols = new THREE.DeviceOrientationControls( camera, renderer.domElement );
+  }
+  else
+  {
+    var controls = new THREE.OrbitControls( camera, renderer.domElement );
+  }
+
+  tick();
+
+  // 毎フレーム時に実行されるループイベントです
+  function tick() {
+    requestAnimationFrame( tick );
+    window.addEventListener( 'resize', onWindowResize, false );
+
+    //box.rotation.y += 0.01;
+    renderer.render( scene, camera ); // レンダリング
+
+    if ( video.readyState === video.HAVE_ENOUGH_DATA ) 
+    {
+      videoImageContext.drawImage( video, 0, 0, videoImage.width, videoImage.height );
+      if ( videoTexture )
+      {
+        videoTexture.needsUpdate = true;
+      }
+    }
+
+    if ( isSmartPhone )
+    {
+      gcontrols.connect();
+      gcontrols.update();
+    }
+    else
+    {
+      box.rotation.y += 0.05 * Math.PI / 180;
+      controls.update();
+    }
+  }
+
+  function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize( window.innerWidth, window.innerHeight );
+  }
+}
+

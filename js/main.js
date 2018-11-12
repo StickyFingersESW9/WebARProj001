@@ -97,6 +97,8 @@ function init() {
   video.play();
 
   videoImage = document.getElementById( 'videoImage' );
+  videoImage.style.width = window.innerWidth;
+  videoImage.style.height = window.innerHeight;
   videoImageContext = videoImage.getContext( '2d' );
   // background color if no video present
   videoImageContext.fillStyle = '#000000';
@@ -170,6 +172,9 @@ function init() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize( window.innerWidth, window.innerHeight );
+
+    videoImage.style.width = window.innerWidth;
+    videoImage.style.height = window.innerHeight;
   }
 }
 

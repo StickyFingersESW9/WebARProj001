@@ -138,6 +138,7 @@ function init() {
     'imgs/trophy_girl.png',
   ];
 
+/*
   const count = 6;
   const distance = 100;
   for ( var i = 0 ; i < count ; ++i )
@@ -151,6 +152,15 @@ function init() {
     stamp.position.set( x, 0, z );
     scene.add( stamp );
   }
+*/
+
+    var stamp00 = CreatePolygon( new THREE.TextureLoader().load( stumpPath[3] ) );
+    stamp00.position.set( 0, 0, 100 );
+    scene.add( stamp00 );
+
+    var stamp01 = CreatePolygon( new THREE.TextureLoader().load( stumpPath[5] ) );
+    stamp01.position.set( 0, 0, -100 );
+    scene.add( stamp01 );
 
 
   if( isSmartPhone )
@@ -208,8 +218,8 @@ function init() {
 
 function CreatePolygon( texture )
 {
-  const width = 100;
-  const height = 100;
+  const width = 200;
+  const height = 200;
   var planeGeometry = new THREE.PlaneGeometry( width, height, 0 );
   var planeMaterial = new THREE.MeshBasicMaterial( { map: texture, overdraw: true, side:THREE.DoubleSide } );
   var plane = new THREE.Mesh( planeGeometry, planeMaterial );

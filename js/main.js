@@ -125,7 +125,33 @@ function init() {
   const geometry = new THREE.BoxGeometry( 400, 400, 400 );
   const material = new THREE.MeshNormalMaterial();
   const box = new THREE.Mesh( geometry, material );
-  scene.add( box );
+  //scene.add( box );
+
+
+  const stumpPath = [
+    'imgs/baseball_dome.png',
+    'imgs/cheerleader_woman.png',
+    'imgs/enjin_sports_man.png',
+    'imgs/sport_volleyball.png',
+    'imgs/sports_ouen.png',
+    'imgs/sports_volleyball_man_atack.png',
+    'imgs/trophy_girl.png',
+  ];
+
+  const count = 6;
+  const distance = 100;
+  for ( var i = 0 ; i < count ; ++i )
+  {
+    var stamp = CreatePolygon( new THREE.TextureLoader().load( stumpPath[i] ) );
+    var angle = i * 360 / count;
+    var x = distance * Math.cos( angle * (Math.PI / 180) );
+    var z = distance * Math.sin( angle * (Math.PI / 180) );
+    console.log( "angle=" + angle );
+    console.log( "x=" + x + ", z=" + z );
+    stamp.position.set( x, 0, z );
+    scene.add( stamp );
+  }
+
 
   if( isSmartPhone )
   {
@@ -178,3 +204,14 @@ function init() {
   }
 }
 
+
+
+function CreatePolygon( texture )
+{
+  const width = 100;
+  const height = 100;
+  var planeGeometry = new THREE.PlaneGeometry( width, height, 0 );
+  var planeMaterial = new THREE.MeshBasicMaterial( { map: texture, overdraw: true, side:THREE.DoubleSide } );
+  var plane = new THREE.Mesh( planeGeometry, planeMaterial );
+  return plane;
+}

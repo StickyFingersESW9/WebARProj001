@@ -154,11 +154,11 @@ function init() {
   }
 */
 
-    var stamp00 = CreatePolygon( new THREE.TextureLoader().load( stumpPath[3] ) );
+    var stamp00 = CreatePolygon( new THREE.TextureLoader().load( stumpPath[5] ) );
     stamp00.position.set( 0, 0, 100 );
     scene.add( stamp00 );
 
-    var stamp01 = CreatePolygon( new THREE.TextureLoader().load( stumpPath[5] ) );
+    var stamp01 = CreatePolygon( new THREE.TextureLoader().load( stumpPath[3] ) );
     stamp01.position.set( 0, 0, -100 );
     scene.add( stamp01 );
 

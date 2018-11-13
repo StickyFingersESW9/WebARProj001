@@ -156,13 +156,13 @@ function init() {
 
     var stampAttay = [];
     var stamp00 = CreatePolygon( new THREE.TextureLoader().load( stumpPath[5] ) );
-    stamp00.position.set( 0, 0, 100 );
+    stamp00.position.set( 0, 0, 1000 );
     stamp00.scale.set( 0.25, 0.25, 0.25 );
     scene.add( stamp00 );
     stampAttay.push( stamp00 );
 
     var stamp01 = CreatePolygon( new THREE.TextureLoader().load( stumpPath[3] ) );
-    stamp01.position.set( 0, 0, -100 );
+    stamp01.position.set( 0, 0, -1000 );
     stamp01.rotation.set( 0, 180, 0 );
     stamp01.scale.set( 0.25, 0.25, 0.25 );
     scene.add( stamp01 );

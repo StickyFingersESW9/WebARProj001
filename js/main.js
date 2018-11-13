@@ -138,36 +138,34 @@ function init() {
     'imgs/trophy_girl.png',
   ];
 
-/*
+  var stampAttay = [];
   const count = 6;
-  const distance = 100;
+  const distance = 1000;
   for ( var i = 0 ; i < count ; ++i )
   {
     var stamp = CreatePolygon( new THREE.TextureLoader().load( stumpPath[i] ) );
     var angle = i * 360 / count;
     var x = distance * Math.cos( angle * (Math.PI / 180) );
     var z = distance * Math.sin( angle * (Math.PI / 180) );
-    console.log( "angle=" + angle );
-    console.log( "x=" + x + ", z=" + z );
     stamp.position.set( x, 0, z );
     scene.add( stamp );
+    stampAttay.push( stamp );
   }
+
+/*
+  var stamp00 = CreatePolygon( new THREE.TextureLoader().load( stumpPath[5] ) );
+  stamp00.position.set( 0, 0, 1000 );
+  //stamp00.scale.set( 0.25, 0.25, 0.25 );
+  scene.add( stamp00 );
+  stampAttay.push( stamp00 );
+
+  var stamp01 = CreatePolygon( new THREE.TextureLoader().load( stumpPath[3] ) );
+  stamp01.position.set( 0, 0, -1000 );
+  stamp01.rotation.set( 0, 180 * (Math.PI / 180), 0 );
+  //stamp01.scale.set( 0.25, 0.25, 0.25 );
+  scene.add( stamp01 );
+  stampAttay.push( stamp01 );
 */
-
-    var stampAttay = [];
-    var stamp00 = CreatePolygon( new THREE.TextureLoader().load( stumpPath[5] ) );
-    stamp00.position.set( 0, 0, 1000 );
-    //stamp00.scale.set( 0.25, 0.25, 0.25 );
-    scene.add( stamp00 );
-    stampAttay.push( stamp00 );
-
-    var stamp01 = CreatePolygon( new THREE.TextureLoader().load( stumpPath[3] ) );
-    stamp01.position.set( 0, 0, -1000 );
-    stamp01.rotation.set( 0, 180 * (Math.PI / 180), 0 );
-    //stamp01.scale.set( 0.25, 0.25, 0.25 );
-    scene.add( stamp01 );
-    stampAttay.push( stamp01 );
-
 
   if( isSmartPhone )
   {

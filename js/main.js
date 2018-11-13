@@ -91,7 +91,7 @@ function init() {
   const scene = new THREE.Scene();
 
   const camera = new THREE.PerspectiveCamera( 45, width / height );
-  camera.position.set( 0, 0, +1000 );
+  camera.position.set( 0, 0, 0 );
 
   video = document.getElementById( 'monitor' );
   video.play();
@@ -154,14 +154,17 @@ function init() {
   }
 */
 
+    var stampAttay = [];
     var stamp00 = CreatePolygon( new THREE.TextureLoader().load( stumpPath[5] ) );
     stamp00.position.set( 0, 0, 10 );
     scene.add( stamp00 );
+    stampAttay.add( stamp00 );
 
     var stamp01 = CreatePolygon( new THREE.TextureLoader().load( stumpPath[3] ) );
     stamp01.position.set( 0, 0, -10 );
     stamp01.rotation.set( 0, 180, 0 );
     scene.add( stamp01 );
+    stampAttay.add( stamp01 );
 
 
   if( isSmartPhone )
@@ -192,7 +195,6 @@ function init() {
       }
     }
 
-
     if ( isSmartPhone )
     {
       gcontrols.connect();
@@ -202,6 +204,11 @@ function init() {
     {
       box.rotation.y += 0.05 * Math.PI / 180;
       controls.update();
+    }
+
+    for ( let val of stampAttay ) {
+      // val.quaternion.copy(this.camera.quaternion); // こちらでも動く
+      val.rotation.setFromRotationMatrix( camera.matrix );
     }
   }
 
